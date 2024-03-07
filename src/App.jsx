@@ -7,6 +7,7 @@ import { createContact } from "./store/Slice/contactsSlice";
 import { deleteContact } from "./store/Slice/contactsSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import { filterContacts } from "./store/Slice/filterSlice";
+import { localStorageContacts } from "./store/Slice/contactsSlice";
 
 export const App = () => {
   const { contacts } = useSelector((state) => state.contacts);
@@ -31,17 +32,17 @@ export const App = () => {
   //   return [];
   // });
 
-  // useEffect(() => {
-  //   const contacts = localStorage.getItem("contacts");
+  useEffect(() => {
+    const contacts = localStorage.getItem("contacts");
 
-  //   const parsedContacts = JSON.parse(contacts);
-  //   console.log("parse", parsedContacts);
+    const parsedContacts = JSON.parse(contacts);
+    console.log("parse", parsedContacts, parsedContacts.length);
 
-  //   if (parsedContacts ) {
-  //     dispatch(createContact(parsedContacts));
-  //     return;
-  //   }
-  // }, []);
+    if (parsedContacts && parsedContacts.length > 0) {
+      dispatch(localStorageContacts(parsedContacts));
+      return;
+    }
+  }, []);
 
   const handleDelete = (nameEl) => {
     dispatch(deleteContact(nameEl));
