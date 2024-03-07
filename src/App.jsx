@@ -1,43 +1,68 @@
 import { useEffect, useState } from "react";
-import uniqid from "uniqid";
 import { Form } from "./Form/Form";
 import { Input } from "./inputs/Input";
 import { ContactRender } from "./ContactRender/ConstactRender";
+import { useDispatch, useSelector } from "react-redux";
+import { createContact } from "./store/Slice/contactsSlice";
+import { deleteContact } from "./store/Slice/contactsSlice";
+import { nanoid } from "@reduxjs/toolkit";
+import { filterContacts } from "./store/Slice/filterSlice";
 
 export const App = () => {
-  const [contacts, setContacts] = useState(() => {
-    const contacts = localStorage.getItem("contacts");
+  const { contacts } = useSelector((state) => state.contacts);
+  const { filter } = useSelector((state) => state.filter);
 
-    const parsedContacts = JSON.parse(contacts);
+  const dispatch = useDispatch();
 
-    if (parsedContacts) {
-      return parsedContacts;
-    }
-    return [];
-  });
+  console.log(contacts, filter);
 
-  const [filter, setFilter] = useState("");
+  // useEffect(() => {
+  //   dispatch();
+  // });
+
+  // const [contacts, setContacts] = useState(() => {
+  //   const contacts = localStorage.getItem("contacts");
+
+  //   const parsedContacts = JSON.parse(contacts);
+
+  //   if (parsedContacts) {
+  //     return parsedContacts;
+  //   }
+  //   return [];
+  // });
+
+  // useEffect(() => {
+  //   const contacts = localStorage.getItem("contacts");
+
+  //   const parsedContacts = JSON.parse(contacts);
+  //   console.log("parse", parsedContacts);
+
+  //   if (parsedContacts ) {
+  //     dispatch(createContact(parsedContacts));
+  //     return;
+  //   }
+  // }, []);
 
   const handleDelete = (nameEl) => {
-    setContacts((prev) => prev.filter(({ id }) => id !== nameEl));
+    dispatch(deleteContact(nameEl));
   };
   const handleSubmit = (name, number) => {
+    console.log(name);
     if (contacts.find((el) => el.name.toLowerCase() === name.toLowerCase())) {
       alert(`${name} is alredy in contacts`);
       return;
     }
-
-    setContacts((prev) =>
-      prev.concat({
+    dispatch(
+      createContact({
         name: name,
         number: number,
-        id: uniqid(),
+        id: nanoid(),
       })
     );
   };
 
   const handleSearch = ({ target: { value: filter } }) => {
-    setFilter(filter);
+    dispatch(filterContacts(filter));
   };
 
   const contactFilter = () => {
