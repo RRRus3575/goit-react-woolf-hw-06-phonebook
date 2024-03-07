@@ -15,28 +15,10 @@ export const App = () => {
 
   const dispatch = useDispatch();
 
-  console.log(contacts, filter);
-
-  // useEffect(() => {
-  //   dispatch();
-  // });
-
-  // const [contacts, setContacts] = useState(() => {
-  //   const contacts = localStorage.getItem("contacts");
-
-  //   const parsedContacts = JSON.parse(contacts);
-
-  //   if (parsedContacts) {
-  //     return parsedContacts;
-  //   }
-  //   return [];
-  // });
-
   useEffect(() => {
     const contacts = localStorage.getItem("contacts");
 
     const parsedContacts = JSON.parse(contacts);
-    console.log("parse", parsedContacts, parsedContacts.length);
 
     if (parsedContacts && parsedContacts.length > 0) {
       dispatch(localStorageContacts(parsedContacts));
@@ -48,7 +30,6 @@ export const App = () => {
     dispatch(deleteContact(nameEl));
   };
   const handleSubmit = (name, number) => {
-    console.log(name);
     if (contacts.find((el) => el.name.toLowerCase() === name.toLowerCase())) {
       alert(`${name} is alredy in contacts`);
       return;
