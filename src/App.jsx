@@ -1,27 +1,20 @@
-import { useEffect, useState } from "react";
 import { Form } from "./Form/Form";
 import { Input } from "./inputs/Input";
 import { ContactRender } from "./ContactRender/ConstactRender";
 import { useDispatch, useSelector } from "react-redux";
-import { createContact } from "./store/Slice/contactsSlice";
+
 import { deleteContact } from "./store/Slice/contactsSlice";
-import { nanoid } from "@reduxjs/toolkit";
-import { filterContacts } from "./store/Slice/filterSlice";
-import { localStorageContacts } from "./store/Slice/contactsSlice";
+import { getContacts, getFilter } from "./store/selectors";
 
 export const App = () => {
-  const { contacts } = useSelector((state) => state.contacts);
-  const { filter } = useSelector((state) => state.filter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
 
   const handleDelete = (nameEl) => {
     dispatch(deleteContact(nameEl));
   };
-
-  // const handleSearch = ({ target: { value: filter } }) => {
-  //   dispatch(filterContacts(filter));
-  // };
 
   const contactFilter = () => {
     const cont = contacts.filter((el) =>

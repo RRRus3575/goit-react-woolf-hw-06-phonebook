@@ -4,12 +4,13 @@ import { Input } from "../inputs/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../store/Slice/contactsSlice";
 import { nanoid } from "@reduxjs/toolkit";
+import { getContacts } from "../store/selectors";
 
 export const Form = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
-  const { contacts } = useSelector((state) => state.contacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const handleChangeName = (e) => {
