@@ -19,9 +19,9 @@ export const App = () => {
     dispatch(deleteContact(nameEl));
   };
 
-  const handleSearch = ({ target: { value: filter } }) => {
-    dispatch(filterContacts(filter));
-  };
+  // const handleSearch = ({ target: { value: filter } }) => {
+  //   dispatch(filterContacts(filter));
+  // };
 
   const contactFilter = () => {
     const cont = contacts.filter((el) =>
@@ -50,8 +50,8 @@ export const App = () => {
         >
           <h2>Contacts</h2>
           <Input
-            onChange={handleSearch}
-            value={filter}
+            // onChange={handleSearch}
+            // value={filter}
             type={"text"}
             name={"filter"}
             label={"Find contacts by name"}
