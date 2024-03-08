@@ -15,32 +15,8 @@ export const App = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const contacts = localStorage.getItem("contacts");
-
-    const parsedContacts = JSON.parse(contacts);
-
-    if (parsedContacts && parsedContacts.length > 0) {
-      dispatch(localStorageContacts(parsedContacts));
-      return;
-    }
-  }, []);
-
   const handleDelete = (nameEl) => {
     dispatch(deleteContact(nameEl));
-  };
-  const handleSubmit = (name, number) => {
-    if (contacts.find((el) => el.name.toLowerCase() === name.toLowerCase())) {
-      alert(`${name} is alredy in contacts`);
-      return;
-    }
-    dispatch(
-      createContact({
-        name: name,
-        number: number,
-        id: nanoid(),
-      })
-    );
   };
 
   const handleSearch = ({ target: { value: filter } }) => {
@@ -54,10 +30,6 @@ export const App = () => {
     return cont;
   };
 
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
-
   return (
     <div
       style={{
@@ -66,7 +38,7 @@ export const App = () => {
     >
       <div>
         <h1>Phonebook</h1>
-        <Form onSubmit={handleSubmit} />
+        <Form />
       </div>
       <div>
         <div
