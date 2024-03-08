@@ -1,6 +1,6 @@
 import { useState } from "react";
 import css from "./Form.module.css";
-import { Input } from "../inputs/Input";
+
 import { useDispatch, useSelector } from "react-redux";
 import { createContact } from "../store/Slice/contactsSlice";
 import { nanoid } from "@reduxjs/toolkit";
@@ -42,14 +42,14 @@ export const Form = () => {
   const { form, submit } = css;
   return (
     <form onSubmit={handleSubmit} autoComplete="off" className={form}>
-      <Input
+      <input
         onChange={handleChangeName}
         type={"text"}
         name={"name"}
         label={"Name"}
         required
       />
-      <Input
+      <input
         onChange={handleChangeNumber}
         type={"tel"}
         name={"number"}
